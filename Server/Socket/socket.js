@@ -11,6 +11,8 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
     credentials: true, 
   },
+  transports: ["websocket"], // Force WebSocket transport
+  allowEIO3: true,  // Allow older Engine.IO versions (compatibility)
 });
 
 const getReceiverSocketId = (receiverId) => {
