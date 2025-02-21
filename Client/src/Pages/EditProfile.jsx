@@ -42,9 +42,15 @@ function EditProfile() {
         }
 
         try {
-            const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/user/edit`, updatedData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
+            const response = await axios.put(
+                `${import.meta.env.VITE_API_URL}/api/user/edit`,
+                updatedData,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                    withCredentials: true, // Ensures cookies (authentication) are sent
+                }
+            );
+
             console.log(response.data);
 
             dispatch(update(response.data))

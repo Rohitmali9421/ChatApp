@@ -11,15 +11,15 @@ const useSocket = (userId) => {
     if (userId) {
       const newSocket = io(import.meta.env.VITE_API_URL, {
         query: { userId },
+        withCredentials: true, 
       });
+
       setSocket(newSocket);
 
-     
       newSocket.on("getOnlineUsers", (users) => {
         dispatch(setOnlineUsers(users));
       });
 
-      
       newSocket.on("newMessage", (message) => {
         dispatch(addMessage(message));
       });

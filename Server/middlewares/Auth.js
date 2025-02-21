@@ -3,7 +3,8 @@ const { getUser } = require("../Services/Auth");
 
 const authenticateToken = (req, res, next) => {
   const token = req.cookies.jwt; 
-
+    console.log(token);
+    
   if (!token) {
     return res.status(401).json({ msg: "Please login" });
   }

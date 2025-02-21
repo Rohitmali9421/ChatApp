@@ -9,7 +9,8 @@ export const loginUser = createAsyncThunk(
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/user/login`,
-        userdata
+        userdata,
+        { withCredentials: true }
       );
       return response.data;
     } catch (error) {
@@ -22,7 +23,8 @@ export const logoutUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/user/logout`
+        `${import.meta.env.VITE_API_URL}/api/user/logout`,
+        { withCredentials: true }
       );
       return response.data;
     } catch (error) {
@@ -37,7 +39,8 @@ export const signupUser = createAsyncThunk(
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/user/signup`,
-        userdata
+        userdata,
+        { withCredentials: true }
       );
       return response.data; // Assuming the response contains user data
     } catch (error) {
@@ -51,7 +54,8 @@ export const checkAuth = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/user`
+        `${import.meta.env.VITE_API_URL}/api/user`,
+        { withCredentials: true }
       );
       return response.data;
     } catch (error) {
@@ -77,7 +81,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
-    update: (state ,action) => {
+    update: (state, action) => {
       state.user = action.payload;
     },
   },
@@ -143,5 +147,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout , update } = authSlice.actions;
+export const { logout, update } = authSlice.actions;
 export default authSlice.reducer;
