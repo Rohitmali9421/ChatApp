@@ -11,7 +11,7 @@ const URI = process.env.MONGODB_URI;
 connectMongoDB(URI);
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://chat-app-xi-orcin.vercel.app",
     credentials: true,
   })
 );
