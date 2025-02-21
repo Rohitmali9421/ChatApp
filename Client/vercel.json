@@ -1,0 +1,9 @@
+{
+    "rewrites": [
+      {
+        "source": "/socket.io/:path*",
+        "destination": "https://chatapp-yvhc.onrender.com/socket.io/:path*"
+      }
+    ]
+  }
+  
