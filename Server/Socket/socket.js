@@ -6,15 +6,15 @@ const app = express();
 const server = http.createServer(app);
 
 const io = new Server(server, {
-  cors: {
-    origin: ["https://chat-app-xi-orcin.vercel.app" ],
-    methods: ["GET", "POST"],
-    credentials: true, 
-  },
-  transports: ["websocket"], // Force WebSocket transport
-  allowEIO3: true,  // Allow older Engine.IO versions (compatibility)
-});
-
+    cors: {
+      origin: ["https://chat-app-xi-orcin.vercel.app"],
+      methods: ["GET", "POST"],
+      credentials: true,
+    },
+    transports: ["websocket", "polling"], // Allow both WebSocket & polling (for fallback)
+    allowEIO3: true,  // Allow older Engine.IO versions (for compatibility)
+  });
+  
 const getReceiverSocketId = (receiverId) => {
   return userSocketMap[receiverId];
 };
