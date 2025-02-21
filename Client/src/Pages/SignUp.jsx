@@ -11,7 +11,7 @@ function SignUp() {
     const { register, handleSubmit, formState: { errors } } = useForm();
     useEffect(() => {
         if (user) {
-            navigate("/home")
+            navigate("/home/chat")
         }
     }, [user])
 
