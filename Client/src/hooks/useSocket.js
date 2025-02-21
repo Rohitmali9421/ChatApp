@@ -12,7 +12,7 @@ const useSocket = (userId) => {
       const newSocket = io(import.meta.env.VITE_API_URL, {
         query: { userId },
         withCredentials: true, 
-        transports: ["websocket"],
+        transports: ["websocket", "polling"]
       });
 
       setSocket(newSocket);
