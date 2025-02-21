@@ -34,9 +34,15 @@ function Home() {
 
     const fetchUsers = async () => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/user/users`);
+            const response = await axios.get(
+                `${import.meta.env.VITE_API_URL}/api/user/users`,
+                {
+                    withCredentials: true, // Allows cookies to be sent
+                }
+            );
+
             setUsers(response.data);
-            setFilteredUsers(response.data); // Initially set filteredUsers to all users
+            setFilteredUsers(response.data);
             setError(null);
         } catch (err) {
             setError("Failed to fetch users.");
@@ -85,9 +91,8 @@ function Home() {
     return (
         <div className="h-screen w-full flex">
             <div
-                className={`bg-gray-50 shadow-lg h-screen sm:w-80 w-full sm:block ${
-                    isSidebarVisible ? "block" : "hidden"
-                }`}
+                className={`bg-gray-50 shadow-lg h-screen sm:w-80 w-full sm:block ${isSidebarVisible ? "block" : "hidden"
+                    }`}
             >
                 <div className="flex items-center justify-between bg-white h-14 sticky top-0 px-4 shadow-md z-10">
                     <FaBars
