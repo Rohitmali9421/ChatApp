@@ -13,7 +13,7 @@ export const sendMessage = async ({
       { message: newMessage }
     );
     setMessages((prev) => [...prev, response.data]);
-    setNewMessage(""); // Clear the input
+    setNewMessage(""); 
   } catch (error) {
     console.error("Error sending message:", error);
   }

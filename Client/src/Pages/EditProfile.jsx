@@ -65,7 +65,7 @@ function EditProfile() {
             <div className="bg-white p-6 rounded-lg shadow-lg w-96">
                 <h2 className="text-2xl font-bold text-center mb-4">Edit Profile</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* Profile Picture */}
+                    
                     <div className="flex flex-col items-center">
                         <label className="cursor-pointer">
                             <img
@@ -78,7 +78,7 @@ function EditProfile() {
                         <p className="text-sm text-gray-500">Click to change</p>
                     </div>
 
-                    {/* Name Field */}
+                    
                     <div>
                         <label className="block text-gray-700">Name</label>
                         <input
@@ -91,7 +91,7 @@ function EditProfile() {
                         />
                     </div>
 
-                    {/* Submit Button */}
+                    
                     <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
                         Save Changes
                     </button>

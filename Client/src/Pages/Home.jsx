@@ -35,7 +35,7 @@ function Home() {
     const fetchUsers = async () => {
         try {
             const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/user/users`, {
-                withCredentials: true, // Ensures authentication cookies are sent
+                withCredentials: true, 
             });
 
             setUsers(response.data);
@@ -58,10 +58,10 @@ function Home() {
         navigate("/");
     };
 
-    // Search Functionality
+   
     useEffect(() => {
         if (searchQuery.trim() === "") {
-            setFilteredUsers(users); // Reset to full list if search is empty
+            setFilteredUsers(users); 
         } else {
             setFilteredUsers(
                 users?.filter((user) =>
@@ -71,7 +71,7 @@ function Home() {
         }
     }, [searchQuery, users]);
 
-    // Close dropdown when clicking outside
+    
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
