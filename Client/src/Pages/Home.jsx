@@ -22,7 +22,7 @@ function Home() {
     const { user } = useSelector((state) => state.auth);
     const onlineUsers = useSelector((state) => state.socket.onlineUsers);
     const navigate = useNavigate();
-    useSocket(user._id);
+    useSocket(user?._id);
     
     useEffect(() => {
         if (!user) {
