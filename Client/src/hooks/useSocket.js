@@ -9,6 +9,7 @@ const useSocket = (userId) => {
 
   useEffect(() => {
     if (userId) {
+        
       const newSocket = io(import.meta.env.VITE_API_URL, {
         query: { userId },
         withCredentials: true, 

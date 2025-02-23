@@ -7,6 +7,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { logoutUser } from "../Features/Auth/AuthSlice";
+import useSocket from "../hooks/useSocket";
 
 function Home() {
     const [isSidebarVisible, setIsSidebarVisible] = useState(true);
@@ -21,7 +22,8 @@ function Home() {
     const { user } = useSelector((state) => state.auth);
     const onlineUsers = useSelector((state) => state.socket.onlineUsers);
     const navigate = useNavigate();
-
+    useSocket(user._id);
+    
     useEffect(() => {
         if (!user) {
             navigate("/");

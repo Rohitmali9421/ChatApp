@@ -9,9 +9,11 @@ const express = require("express");
 const port = process.env.PORT || 8000;
 const URI = process.env.MONGODB_URI;
 connectMongoDB(URI);
+
+
 app.use(
   cors({
-    origin: "https://chat-app-xi-orcin.vercel.app",
+    origin: process.env.FRONTEND_API,
     credentials: true,
   })
 );
