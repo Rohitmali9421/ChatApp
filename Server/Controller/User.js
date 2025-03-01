@@ -25,8 +25,8 @@ const handlesignUp = async (req, res) => {
 
     res.cookie("jwt", accessToken, {
       maxAge: 15 * 24 * 60 * 60 * 1000,
-      httpOnly: true, 
-      secure: true, 
+      httpOnly: true,
+      secure: true,
       sameSite: "None",
     });
     return res.status(200).json(userWithoutPassword);
@@ -48,8 +48,8 @@ const handleLogin = async (req, res) => {
     const { password: _, ...userWithoutPassword } = user._doc;
     res.cookie("jwt", accessToken, {
       maxAge: 15 * 24 * 60 * 60 * 1000,
-      httpOnly: true, 
-      secure: true, 
+      httpOnly: true,
+      secure: true,
       sameSite: "None",
     });
     return res.status(200).json(userWithoutPassword);
@@ -61,8 +61,14 @@ const handleLogin = async (req, res) => {
 };
 const logout = async (req, res) => {
   try {
-    res.clearCookie("jwt");
-    return res.status(200).json({ msg: "log out successfully" });
+    res.clearCookie("jwt", {
+      httpOnly: true,
+      secure: true, // Ensures cookie is only removed over HTTPS (for production)
+      sameSite: "None", // Allows cross-origin cookie removal
+      path: "/", // Ensures the cookie is cleared across the entire site
+    });
+
+    return res.status(200).json({ msg: "Logged out successfully" });
   } catch (error) {
     return res
       .status(500)
