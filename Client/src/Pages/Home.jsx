@@ -17,13 +17,13 @@ function Home() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [menuOpen, setMenuOpen] = useState(false);
-    const menuRef = useRef(null); // Reference for dropdown menu
+    const menuRef = useRef(null);
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.auth);
     const onlineUsers = useSelector((state) => state.socket.onlineUsers);
     const navigate = useNavigate();
     useSocket(user?._id);
-    
+
     useEffect(() => {
         if (!user) {
             navigate("/");
@@ -37,11 +37,17 @@ function Home() {
     const fetchUsers = async () => {
         try {
             const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/user/users`, {
-                withCredentials: true, 
+                withCredentials: true,
             });
 
-            setUsers(response.data);
-            setFilteredUsers(response.data);
+            const aiUser = {
+                _id: "ai",
+                name: "Chat with AI",
+                profilePic: { url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThr7qrIazsvZwJuw-uZCtLzIjaAyVW_ZrlEQ&s" }
+            };
+
+            setUsers([aiUser, ...response.data]);
+            setFilteredUsers([aiUser, ...response.data]);
             setError(null);
         } catch (err) {
             setError("Failed to fetch users.");
@@ -60,10 +66,9 @@ function Home() {
         navigate("/");
     };
 
-   
     useEffect(() => {
         if (searchQuery.trim() === "") {
-            setFilteredUsers(users); 
+            setFilteredUsers(users);
         } else {
             setFilteredUsers(
                 users?.filter((user) =>
@@ -73,7 +78,6 @@ function Home() {
         }
     }, [searchQuery, users]);
 
-    
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -90,8 +94,7 @@ function Home() {
     return (
         <div className="h-screen w-full flex">
             <div
-                className={`bg-gray-50 shadow-lg h-screen sm:w-80 w-full sm:block ${isSidebarVisible ? "block" : "hidden"
-                    }`}
+                className={`bg-gray-50 shadow-lg h-screen sm:w-80 w-full sm:block ${isSidebarVisible ? "block" : "hidden"}`}
             >
                 <div className="flex items-center justify-between bg-white h-14 sticky top-0 px-4 shadow-md z-10">
                     <FaBars
@@ -135,20 +138,28 @@ function Home() {
                 <div className="h-[calc(100%-3.5rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                     {loading && <p className="text-gray-500 text-center py-4">Loading users...</p>}
                     {error && <p className="text-red-500 text-center py-4">{error}</p>}
+
                     {filteredUsers &&
                         filteredUsers.map((user) => (
-                            <Link
-                                key={user._id}
-                                to={`/home/chat/${user._id}?name=${user.name}&profilepic=${user.profilePic?.url}`}
-                                onClick={() => setIsSidebarVisible(false)}
-                            >
-                                <UserList
-                                    name={user.name}
-                                    image={user.profilePic?.url || "default-profile-pic.png"}
-                                    isOnline={onlineUsers.includes(user._id)}
-                                />
-                            </Link>
+                            user._id === "ai" ? (
+                                <Link key={user._id} to="/home/ai-chat" onClick={() => setIsSidebarVisible(false)}>
+                                    <UserList
+                                        name={user.name}
+                                        image={user.profilePic?.url || "default-profile-pic.png"}
+                                        isOnline={true}  // AI is always "online"
+                                    />
+                                </Link>
+                            ) : (
+                                <Link key={user._id} to={`/home/chat/${user._id}?name=${user.name}&profilepic=${user.profilePic?.url}`} onClick={() => setIsSidebarVisible(false)}>
+                                    <UserList
+                                        name={user.name}
+                                        image={user.profilePic?.url || "default-profile-pic.png"}
+                                        isOnline={onlineUsers.includes(user._id)}
+                                    />
+                                </Link>
+                            )
                         ))}
+
                     {filteredUsers?.length === 0 && (
                         <p className="text-gray-500 text-center py-4">No users found.</p>
                     )}

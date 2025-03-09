@@ -8,6 +8,7 @@ import Home from './Pages/Home';
 import Start from './Components/Start';
 import Chat from './Components/Chat';
 import EditProfile from './Pages/EditProfile';
+import AiChat from './Components/AiChat';
 const router = createBrowserRouter(
     createRoutesFromElements(
         <>
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
             <Route path="/home" element={<Home />}>
                 <Route path="chat" element={<Start />} />
                 <Route path="chat/:id" element={<Chat />} />
+                <Route path="ai-chat" element={<AiChat/>} />
             </Route>
         </>
     )
